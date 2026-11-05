@@ -1,9 +1,39 @@
 import unittest
 
-from cargo_semver_python import compare, matches, validate
+from cargo_semver_python import compare, matches, parse, validate
 
 
 class SemverTests(unittest.TestCase):
+    def test_parse(self):
+        self.assertEqual(
+            parse("1.2.3-alpha.1+build.5"),
+            {
+                "major": 1,
+                "minor": 2,
+                "patch": 3,
+                "prerelease": "alpha.1",
+                "build": "build.5",
+            },
+        )
+        self.assertEqual(
+            parse("0.0.0"),
+            {
+                "major": 0,
+                "minor": 0,
+                "patch": 0,
+                "prerelease": None,
+                "build": None,
+            },
+        )
+        self.assertEqual(parse("1.2.3+001")["build"], "001")
+        self.assertEqual(parse("18446744073709551615.0.0")["major"], 2**64 - 1)
+
+    def test_parse_invalid(self):
+        for value in ("1.2", "01.2.3", "1.2.3-alpha..1", "18446744073709551616.0.0"):
+            with self.subTest(value=value):
+                with self.assertRaises(ValueError):
+                    parse(value)
+
     def test_validate(self):
         for value in ("0.0.0", "1.2.3", "1.2.3-alpha.1", "1.2.3+build.5"):
             with self.subTest(value=value):

@@ -1,7 +1,28 @@
 use pyo3::exceptions::PyValueError;
 use pyo3::prelude::*;
+use pyo3::types::PyDict;
 use semver::{Version, VersionReq};
 use std::cmp::Ordering;
+
+#[pyfunction]
+fn parse<'py>(py: Python<'py>, version: &str) -> PyResult<Bound<'py, PyDict>> {
+    let version = Version::parse(version).map_err(|e| PyValueError::new_err(e.to_string()))?;
+    let result = PyDict::new(py);
+    let prerelease = match version.pre.as_str() {
+        "" => None,
+        value => Some(value),
+    };
+    let build = match version.build.as_str() {
+        "" => None,
+        value => Some(value),
+    };
+    result.set_item("major", version.major)?;
+    result.set_item("minor", version.minor)?;
+    result.set_item("patch", version.patch)?;
+    result.set_item("prerelease", prerelease)?;
+    result.set_item("build", build)?;
+    Ok(result)
+}
 
 #[pyfunction]
 fn validate(version: &str) -> bool {
@@ -29,6 +50,7 @@ fn matches(version: &str, requirement: &str) -> PyResult<bool> {
 
 #[pymodule]
 fn cargo_semver_python(module: &Bound<'_, PyModule>) -> PyResult<()> {
+    module.add_function(wrap_pyfunction!(parse, module)?)?;
     module.add_function(wrap_pyfunction!(validate, module)?)?;
     module.add_function(wrap_pyfunction!(compare, module)?)?;
     module.add_function(wrap_pyfunction!(matches, module)?)?;
