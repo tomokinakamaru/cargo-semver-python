@@ -49,7 +49,7 @@ fn matches(version: &str, requirement: &str) -> PyResult<bool> {
 }
 
 #[pymodule]
-fn cargo_semver_python(module: &Bound<'_, PyModule>) -> PyResult<()> {
+fn cargo_semver(module: &Bound<'_, PyModule>) -> PyResult<()> {
     module.add_function(wrap_pyfunction!(parse, module)?)?;
     module.add_function(wrap_pyfunction!(validate, module)?)?;
     module.add_function(wrap_pyfunction!(compare, module)?)?;
