@@ -13,7 +13,7 @@ requirements, which can differ from npm or Python package version constraints.
 ## Install from GitHub
 
 ```sh
-python -m pip install "cargo_semver @ git+https://github.com/tomokinakamaru/cargo-semver-python.git"
+python -m pip install "cargo-semver @ git+https://github.com/tomokinakamaru/cargo-semver-python.git"
 ```
 
 To install a specific release, append a Git tag such as `@v0.1.0` to the URL
