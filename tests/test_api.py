@@ -1,6 +1,6 @@
 import unittest
 
-from cargo_semver_python import compare, matches, parse, validate
+from cargo_semver import compare, matches, parse, validate
 
 
 class SemverTests(unittest.TestCase):

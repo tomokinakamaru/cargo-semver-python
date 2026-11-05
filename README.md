@@ -13,7 +13,7 @@ requirements, which can differ from npm or Python package version constraints.
 ## Install from GitHub
 
 ```sh
-python -m pip install "cargo-semver-python @ git+https://github.com/tomokinakamaru/cargo-semver-python.git"
+python -m pip install "cargo_semver @ git+https://github.com/tomokinakamaru/cargo-semver-python.git"
 ```
 
 To install a specific release, append a Git tag such as `@v0.1.0` to the URL
@@ -24,7 +24,7 @@ build isolation installs maturin automatically.
 ## Usage
 
 ```python
-from cargo_semver_python import compare, matches, parse, validate
+from cargo_semver import compare, matches, parse, validate
 
 assert parse("1.2.3-alpha.1+build.5") == {
     "major": 1, "minor": 2, "patch": 3,

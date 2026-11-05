@@ -3,7 +3,7 @@ requires = ["maturin>=1.10,<2"]
 build-backend = "maturin"
 
 [project]
-name = "cargo-semver-python"
+name = "cargo_semver"
 version = "0.1.0"
 description = "Python bindings to Cargo's SemVer implementation"
 requires-python = ">=3.11"

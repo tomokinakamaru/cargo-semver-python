@@ -4,7 +4,7 @@ version = "0.1.0"
 edition = "2021"
 
 [lib]
-name = "cargo_semver_python"
+name = "cargo_semver"
 crate-type = ["cdylib"]
 
 [dependencies]
